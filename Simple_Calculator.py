@@ -1,3 +1,4 @@
+# This program is a simmple calculator that can add, multiply, divide, square, etc.
 from ast import Delete
 from distutils.cmd import Command
 from logging.config import valid_ident
