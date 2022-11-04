@@ -1,3 +1,5 @@
+# This program is a simmple calculator that can add, multiply, divide, square, etc.
+#Simple Calculator
 from ast import Delete
 from distutils.cmd import Command
 from logging.config import valid_ident
@@ -25,8 +27,9 @@ root.config(bg = black_clr)
 
 
 #Define functions
-
 def submit_number(number):
+    """Add a number or decimal to the display"""
+    #Insert the number or decimal pressed to the end of the display    
     if display.get() == "0":
          display.delete(0,END)
     display.insert(END, number)
@@ -37,13 +40,17 @@ def submit_number(number):
 
 
 def operate(operator):
+    """Store the first number of the expression and the operation to be used"""
     global first_number
     global operation
+    #Get the operator pressed and the current value of the display. This is the first number in the calculation
     operation = operator
     first_number = display.get()
+
+    #Delete the value (first number) from entry display
     display.delete(0,END)
 
-    
+    #Dispable all operator buttons until equal or clear is pressed
     add_button.config(state=DISABLED)
     square_button.config(state=DISABLED)
     multiply_button.config(state=DISABLED)
@@ -52,10 +59,12 @@ def operate(operator):
     divide_button.config(state=DISABLED)
     inverse_button.config(state=DISABLED)
 
+    #Return decimal button to normal state
     decimal_button.config(state=NORMAL)
 
 def equal():
-
+    """Run the stored operation for two number."""
+     #Perform the desired mathematics
     if operation == "add":
         value = float(first_number) + float(display.get())
 
@@ -73,16 +82,16 @@ def equal():
             value = "ERROR"
         else:
             value = float(first_number) / float(display.get())
-    
+
+    #Remove the curent value of the display and update it with the answer
     display.delete(0,END)
     display.insert(0, value)
-    if "." in display.get():
-        decimal_button.config(state=DISABLED)
 
+    #Return buttons to normal states
     enable_button()
 
 def enable_button():
-    
+    """Enabel all butonns on the calculator"""
     add_button.config(state=NORMAL)
     square_button.config(state=NORMAL)
     multiply_button.config(state=NORMAL)
@@ -93,21 +102,29 @@ def enable_button():
 
 
 def clear():
+    """Clear the display"""
     display.delete(0,END)
     display.insert(0, int(0))
     decimal_button.config(state=NORMAL)
+    #Return buttons to normal state
     enable_button()
 
 def inverse():
+    """Calculate the inverse of a given number."""
+    #Do not allow for 1/0
     if display.get() == "0":
         value = "ERROR"
     else:
         value = 1/float(display.get())
+    #Remove the current value in the display and update it with the answer
     display.delete(0,END)
     display.insert(0,value)
 
 def square():
+    """Calculate the square of a given number."""
     value = float(display.get())**2
+
+    #Remove the current value in the display and update it with the answer
     display.delete(0,END)
     display.insert(0,value)
 
